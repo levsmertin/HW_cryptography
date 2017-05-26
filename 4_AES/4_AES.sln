@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "4_AES", "4_AES\4_AES.vcxproj", "{FFBBE2A0-593E-4F37-B130-0819D481F32C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FFBBE2A0-593E-4F37-B130-0819D481F32C}.Debug|Win32.ActiveCfg = Debug|Win32
+		{FFBBE2A0-593E-4F37-B130-0819D481F32C}.Debug|Win32.Build.0 = Debug|Win32
+		{FFBBE2A0-593E-4F37-B130-0819D481F32C}.Release|Win32.ActiveCfg = Release|Win32
+		{FFBBE2A0-593E-4F37-B130-0819D481F32C}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
