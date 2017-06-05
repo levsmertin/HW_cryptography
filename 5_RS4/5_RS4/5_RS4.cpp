@@ -1,5 +1,6 @@
-//Домашняя работа от 12 мая 2016
-//Уланов А БАС-14
+// 5_RS4.cpp: определяет точку входа для консольного приложения.
+//
+
 #include "stdafx.h"
 #include "iostream"
 #include <vector>
@@ -26,7 +27,7 @@ public:
 
 	{
 		if (type != "wb" && type != "rb") return false;
-		_type = type;
+		_type = type; 
 		_file = fopen(name.c_str(), type.c_str());
 		if (_file != NULL&& type == "rb")
 		{
@@ -54,27 +55,28 @@ public:
 		return size;
 	}
 
-	std::vector<byte> &GetData() { return _data; }
+	std::vector<unsigned char> &GetData() { return _data; }
 	FILE*  &GetFile() { return _file; }
 private:
 	std::string _type;
-	std::vector<byte> _data;
+	std::vector<unsigned char> _data;
 	FILE* _file;
-	int _size = 1;
+	int _size = 01;
 };
 
 
+class RS4
 
-class  O_T_P
 {
 public:
-	O_T_P()
+	RS4()
 	{
+		
 	}
-	~O_T_P()
+	~RS4()
 	{
-	}
 
+	}
 
 	void Init(std::string &plaintext, std::string &key, std::string &ciphertext)
 	{
@@ -83,8 +85,6 @@ public:
 		_ciphertext = ciphertext;
 
 	}
-
-
 	std::string Encrypt()
 	{
 		bool rez = true;
@@ -95,15 +95,13 @@ public:
 		rez = rez && key.Open(_key, "rb");
 		rez = rez && ciphertex.Open(_ciphertext, "wb");
 		if (!rez) return "OPEN_FILE_ERROR";
-		rez = rez && VerrnamCipher(plaintext, key, ciphertex);
-		if (!rez) return "SIZE_FILE_ERROR";
+		metadata_shedule(key);		
+		my_XOR(plaintext, ciphertex);
 		plaintext.Close(false);
 		key.Close(false);
 		ciphertex.Close(true);
 		return "SUCCESS\n";
-
 	}
-
 	std::string Decript()
 	{
 		bool rez = true;
@@ -114,82 +112,84 @@ public:
 		rez = rez && key.Open(_key, "rb");
 		rez = rez && ciphertex.Open(_ciphertext, "rb");
 		if (!rez) return "OPEN_FILE_ERROR\n";
-		rez = rez && VerrnamCipher(ciphertex, key, plaintext);
-		if (!rez) return "SIZE_FILE_ERROR\n";
+		metadata_shedule(key);
+		my_XOR(ciphertex, plaintext);
 		plaintext.Close(true);
 		key.Close(false);
 		ciphertex.Close(false);
 		return "SUCCESS\n";
-
-	}
-
-	std::string Keygen()
-
-	{
-		bool rez = true;
-		MyFile plaintext;
-		MyFile key;
-		rez = rez && plaintext.Open(_plaintext, "rb");
-		rez = rez && key.Open(_key, "wb");
-		if (!rez) return "OPEN_FILE_ERROR\n";
-		srand(time(NULL));
-		rand() % 0 + 255;
-		char random_char;
-		unsigned int i = 0;
-		int i_max = plaintext.GetData().size();
-		int i_progress = i_max / 20;
-		for (; i < i_max; i++)
-		{
-			if (i % i_progress == 0) std::cout << "&";
-			fwrite(&random_char, 1, 1, key.GetFile());
-		}
-		std::cout << "\n";
-		plaintext.Close(false);
-		key.Close(false);
-		return "SUCCESS\n";
-
 	}
 
 private:
 	std::string _plaintext;
 	std::string _key;
 	std::string _ciphertext;
+	unsigned char S[256];
+	int I = 0;
+	int J = 0;
 
-	bool VerrnamCipher(MyFile &oper1, MyFile &oper2, MyFile &rez)
+	void metadata_shedule(MyFile &key)
 	{
-
-		unsigned int i = 0;
-		bool ret = false;
-		if (oper1.GetData().size() == oper2.GetData().size())
+		I = 0;
+		for (; I < 256; I++)
 		{
-			ret = true;
-			int i_max = oper1.GetData().size();
-			int i_progress = i_max / 20;
-			for (; i < i_max; i++)
-			{
-				if (i % i_progress == 0) std::cout << "&";
-				rez.GetData().push_back(oper1.GetData().at(i) ^ oper2.GetData().at(i));
-			}
-			std::cout << "\n";
+			S[I] = I;
 		}
-		return ret;
+		J = 0;
+		I = 0;
+		for (; I < 256; I++)
+		{
+			J = (J + S[I] + key.GetData().at(I % key.GetData().size())) % 256;
+			swap_S();
+		}
+		J = 0;
+		I = 0;
+	}
+	char get_key_i()
+	{
+		I = (I + 1) % 256;
+		J = (J + S[I]) % 256;
+		swap_S();
+		return S[(S[I] + S[J]) % 256];
+	}
+	void swap_S()
+	{
+		unsigned char tmp = S[I];
+		S[I] = S[J];
+		S[J] = tmp;
 
+	}
+	void my_XOR(MyFile &IN, MyFile &OUT)
+
+	{
+		int i_max = IN.GetData().size();
+		int i_progress = i_max / 20;
+		for (int k=0; k < i_max; k++)
+		{
+			if (k % i_progress == 0) std::cout << "&";
+			OUT.GetData().push_back(IN.GetData().at(k) ^ get_key_i());
+		}
+		std::cout << "\n";
 	}
 
 };
 
-int main()
+
+
+
+void main()
 {
+
 	std::string plaintext_file = "";
 	std::string key_file = "";
 	std::string ciphertext_file = "";
-	O_T_P my_OTP;
+	RS4 my_RS4;
 	char mode;
 	bool flag_exit = true;
 	do
 	{
 		system("cls");
-		std::cout << " One-time pad\n 1 - encrypt \n 2 - decrypt\n 3 - generate a key\n 4 - exit  \n";
+		std::cout << " RS4\n 1 - encrypt \n 2 - decrypt\n 3 - exit  \n";
 		std::cin >> mode;
 
 		switch (mode)
@@ -201,11 +201,11 @@ int main()
 			std::cin >> key_file;
 			std::cout << "ciphertext = \n";
 			std::cin >> ciphertext_file;
-			my_OTP.Init(plaintext_file, key_file, ciphertext_file);
-			std::cout << my_OTP.Encrypt();
+			my_RS4.Init(plaintext_file, key_file, ciphertext_file);
+			std::cout << my_RS4.Encrypt();
 			system("pause");
 			break;
-			
+
 		case '2':
 
 			std::cout << "ciphertext = \n";
@@ -214,25 +214,15 @@ int main()
 			std::cin >> key_file;
 			std::cout << "plaintext = \n";
 			std::cin >> plaintext_file;
-			my_OTP.Init(plaintext_file, key_file, ciphertext_file);
-			std::cout << my_OTP.Decript();
+			my_RS4.Init(plaintext_file, key_file, ciphertext_file);
+			std::cout << my_RS4.Decript();
 			system("pause");
 			break;
 
 
-		case '3':
+		
 
-			std::cout << "plaintext = \n";
-			std::cin >> plaintext_file;
-			std::cout << "key filename = \n";
-			std::cin >> key_file;
-			my_OTP.Init(plaintext_file, key_file, ciphertext_file);
-			std::cout << my_OTP.Keygen();
-			system("pause");
-			break;
-
-
-		case '4': flag_exit = false; break;
+		case '3': flag_exit = false; break;
 
 		default:
 			break;
@@ -242,6 +232,6 @@ int main()
 	} while (flag_exit);
 	system("pause");
 
-
-
+	
 }
+
