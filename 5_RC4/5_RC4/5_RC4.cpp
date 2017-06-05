@@ -27,7 +27,7 @@ public:
 
 	{
 		if (type != "wb" && type != "rb") return false;
-		_type = type; 
+		_type = type;
 		_file = fopen(name.c_str(), type.c_str());
 		if (_file != NULL&& type == "rb")
 		{
@@ -65,15 +65,15 @@ private:
 };
 
 
-class RS4
+class RC4
 
 {
 public:
-	RS4()
+	RC4()
 	{
-		
+
 	}
-	~RS4()
+	~RC4()
 	{
 
 	}
@@ -95,7 +95,7 @@ public:
 		rez = rez && key.Open(_key, "rb");
 		rez = rez && ciphertex.Open(_ciphertext, "wb");
 		if (!rez) return "OPEN_FILE_ERROR";
-		metadata_shedule(key);		
+		metadata_shedule(key);
 		my_XOR(plaintext, ciphertex);
 		plaintext.Close(false);
 		key.Close(false);
@@ -164,7 +164,7 @@ private:
 	{
 		int i_max = IN.GetData().size();
 		int i_progress = i_max / 20;
-		for (int k=0; k < i_max; k++)
+		for (int k = 0; k < i_max; k++)
 		{
 			if (k % i_progress == 0) std::cout << "&";
 			OUT.GetData().push_back(IN.GetData().at(k) ^ get_key_i());
@@ -183,13 +183,13 @@ void main()
 	std::string plaintext_file = "";
 	std::string key_file = "";
 	std::string ciphertext_file = "";
-	RS4 my_RS4;
+	RC4 my_RS4;
 	char mode;
 	bool flag_exit = true;
 	do
 	{
 		system("cls");
-		std::cout << " RS4\n 1 - encrypt \n 2 - decrypt\n 3 - exit  \n";
+		std::cout << " RC4\n 1 - encrypt \n 2 - decrypt\n 3 - exit  \n";
 		std::cin >> mode;
 
 		switch (mode)
@@ -220,7 +220,7 @@ void main()
 			break;
 
 
-		
+
 
 		case '3': flag_exit = false; break;
 
@@ -232,6 +232,6 @@ void main()
 	} while (flag_exit);
 	system("pause");
 
-	
+
 }
 
