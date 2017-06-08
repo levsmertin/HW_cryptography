@@ -152,13 +152,8 @@ int main()
 		my_pl.push_back(my_p_[j]);
 	}
 
-	byte k[8] = { 0, 0, 0, 0, 0, 0, 0, 1 };
-	for (int p = 0; p < 50; p++)
-	{
-		
-		next(k);
-		std::cout << array_byte_to_int(k) << std::endl;
-	}
+
+
 
 
 	srand(time(NULL));
