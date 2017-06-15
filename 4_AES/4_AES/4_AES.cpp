@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "iostream"
 #include <string>
 #include "..\..\cryptopp\aes.h"
@@ -230,7 +229,7 @@ private:
 };
 
 
-int _tmain(int argc, _TCHAR* argv[])
+int main()
 {
 	std::string plaintext_file;
 	std::string key_file;
