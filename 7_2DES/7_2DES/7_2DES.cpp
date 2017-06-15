@@ -31,7 +31,7 @@
 	}
 	std::vector<byte> D(std::vector<byte> &ciphertext, byte key[])
 	{
-
+		
 		std::vector<byte> plaintext;
 		
 		plaintext.resize(ciphertext.size() + CryptoPP::DES::BLOCKSIZE);
@@ -157,8 +157,10 @@ int main()
 
 
 	srand(time(NULL));
-	rand() % 0 + 262144;
+	//rand() % 0 + 262144;
+	rand() % 0 + 5;
 	int i_shift = rand();
+	std::cout << i_shift<< std::endl;
 	rand() % 0 + 256;
 	int_in_array_byte(i_shift, shift);
 
@@ -181,14 +183,29 @@ int main()
 	
 	int i_max = 262144;
 	int i_progress = i_max / 20;
-	for (int i = 0; i < 10; i++)
+	std::vector<byte> buf;
+	for (int i = 0; i < 5; i++)
 	{			
 		e.insert(std::pair <std::vector<byte>, unsigned __int32>(E(my_pl, key_1_next), array_byte_to_int(key_1_next)));
 		std::cout << array_byte_to_int(key_1_next) << std::endl;
+
+		buf = E(my_pl, key_1_next);
+		for (int j = 0; j < buf.size(); j++)
+		{
+			std::cout << buf.at(j);
+		}
+		std::cout << std::endl << std::endl;
+
 		if (flag)
 		{
 			d.insert(std::pair <std::vector<byte>, unsigned __int32>(D(my_c, key_2_next), array_byte_to_int(key_2_next)));
-			std::cout << array_byte_to_int(key_2_next) << std::endl;
+			std::cout << array_byte_to_int(key_2_next) << "    "  << std::endl;
+			buf = D(my_c, key_2_next);
+			for (int j = 0; j < buf.size(); j++)
+			{
+				std::cout << buf.at(j);
+			}
+			std::cout << std::endl << std::endl;
 			flag = false;
 		}
 		if (next(key_1_next))
@@ -201,6 +218,8 @@ int main()
 
 	std::cout << std::endl << e.size();
 	std::cout << std::endl << d.size();
+
+
 
 	
 	

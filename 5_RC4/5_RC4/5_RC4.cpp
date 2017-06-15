@@ -1,7 +1,3 @@
-// 5_RS4.cpp: определяет точку входа для консольного приложения.
-//
-
-#include "stdafx.h"
 #include "iostream"
 #include <vector>
 #include <stdio.h>
@@ -9,61 +5,9 @@
 #include <string>
 #include <ctime>
 #include <string>
-
-class MyFile
-{
-public:
-	MyFile()
-		: _file(NULL)
-	{
-
-	}
-	~MyFile()
-	{
-		Close(false);
-	}
-
-	bool Open(std::string &name, std::string type)
-
-	{
-		if (type != "wb" && type != "rb") return false;
-		_type = type;
-		_file = fopen(name.c_str(), type.c_str());
-		if (_file != NULL&& type == "rb")
-		{
-			_size = Size(_file);
-			_data.resize(_size);
-			fread(_data.data(), 1, _size, _file);
-			return !_data.empty();
-		}
-		if (_file != NULL && type == "wb") return true;
-		return false;
-	}
-	void Close(bool write_vector)
-	{
-		if (_type == "wb"&& write_vector) fwrite(_data.data(), _data.size(), 1, _file);
-		fclose(_file);
-		_data.clear();
-	}
-	int static Size(FILE* file)
-	{
-
-		int size = 0;
-		fseek(file, 0, SEEK_END);
-		size = ftell(file);
-		fseek(file, 0, SEEK_SET);
-		return size;
-	}
-
-	std::vector<unsigned char> &GetData() { return _data; }
-	FILE*  &GetFile() { return _file; }
-private:
-	std::string _type;
-	std::vector<unsigned char> _data;
-	FILE* _file;
-	int _size = 01;
-};
-
+#include "..\..\MyFile.h"
+#pragma warning(disable : 4996)
+#define _CRT_NO_WARNINGS
 
 class RC4
 
@@ -175,61 +119,79 @@ private:
 };
 
 
-
-
 void main()
 {
-
-	std::string plaintext_file = "";
-	std::string key_file = "";
-	std::string ciphertext_file = "";
+	std::string plaintext_file = "..\\..\\1.docx";
+	std::string key_file = "..\\key_for_rc4";
+	std::string ciphertext_file = "..\\out\\cipher";
+	std::string decrypt_file = "..\\out\\decript.docx";
 	RC4 my_RS4;
-	char mode;
-	bool flag_exit = true;
-	do
+	std::cout << "default \nkey file = ..\\out\\key" << std::endl;
+	std::cout << "plaintext file = ..\\..\\1.docx" << std::endl;
+	std::cout << "ciphertext file = ..\\out\\cipher" << std::endl;
+	std::cout << "decript file = ..\\out\\decript.docx" << std::endl;
+	std::cout << "use? (1 - yes, 0 - no)\n";
+	int default_flag = 0;
+	std::cin >> default_flag;
+	system("cls");
+	if (default_flag == 1)
 	{
-		system("cls");
-		std::cout << " RC4\n 1 - encrypt \n 2 - decrypt\n 3 - exit  \n";
-		std::cin >> mode;
+		my_RS4.Init(plaintext_file, key_file, ciphertext_file);
+		std::cout << "Encrypt :" << my_RS4.Encrypt();
+		my_RS4.Init(decrypt_file, key_file, ciphertext_file);
+		std::cout << "Decrypt :"<< my_RS4.Decript();
+	}
+	else
+	{
 
-		switch (mode)
+		char mode;
+		bool flag_exit = true;
+		do
 		{
-		case '1':
-			std::cout << "plaintext = \n";
-			std::cin >> plaintext_file;
-			std::cout << "key = \n";
-			std::cin >> key_file;
-			std::cout << "ciphertext = \n";
-			std::cin >> ciphertext_file;
-			my_RS4.Init(plaintext_file, key_file, ciphertext_file);
-			std::cout << my_RS4.Encrypt();
-			system("pause");
-			break;
+			system("cls");
+			std::cout << " RC4\n 1 - encrypt \n 2 - decrypt\n 3 - exit  \n";
+			std::cin >> mode;
 
-		case '2':
+			switch (mode)
+			{
+			case '1':
+				std::cout << "plaintext = \n";
+				std::cin >> plaintext_file;
+				std::cout << "key = \n";
+				std::cin >> key_file;
+				std::cout << "ciphertext = \n";
+				std::cin >> ciphertext_file;
+				my_RS4.Init(plaintext_file, key_file, ciphertext_file);
+				std::cout << my_RS4.Encrypt();
+				system("pause");
+				break;
 
-			std::cout << "ciphertext = \n";
-			std::cin >> ciphertext_file;
-			std::cout << "key = \n";
-			std::cin >> key_file;
-			std::cout << "plaintext = \n";
-			std::cin >> plaintext_file;
-			my_RS4.Init(plaintext_file, key_file, ciphertext_file);
-			std::cout << my_RS4.Decript();
-			system("pause");
-			break;
+			case '2':
 
-
-
-
-		case '3': flag_exit = false; break;
-
-		default:
-			break;
-		}
+				std::cout << "ciphertext = \n";
+				std::cin >> ciphertext_file;
+				std::cout << "key = \n";
+				std::cin >> key_file;
+				std::cout << "plaintext = \n";
+				std::cin >> plaintext_file;
+				my_RS4.Init(plaintext_file, key_file, ciphertext_file);
+				std::cout << my_RS4.Decript();
+				system("pause");
+				break;
 
 
-	} while (flag_exit);
+
+
+			case '3': flag_exit = false; break;
+
+			default:
+				break;
+			}
+
+
+		} while (flag_exit);
+
+	}
 	system("pause");
 
 
