@@ -1,15 +1,17 @@
-﻿#include "stdafx.h"
+﻿
 #include "iostream"
 #include <string>
-#include "..\cryptopp565\des.h"
-#include "..\cryptopp565\cryptlib.h"
-#include "..\cryptopp565\modes.h"
-#include "..\cryptopp565\osrng.h"
-#include "..\cryptopp565\filters.h"
-#include "..\cryptopp565\cbcmac.h"
+#include "..\..\cryptopp\des.h"
+#include "..\..\cryptopp\cryptlib.h"
+#include "..\..\cryptopp\modes.h"
+#include "..\..\cryptopp\osrng.h"
+#include "..\..\cryptopp\filters.h"
+#include "..\..\cryptopp\cbcmac.h"
 #include <vector>
 #include "..\..\MyFile.h"
-
+#pragma comment(lib,"..\\..\\cryptopp\\cryptlib.lib")
+#pragma warning(disable : 4996)
+#define _CRT_NO_WARNINGS
 
 
 class DES
