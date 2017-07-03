@@ -1,0 +1,15 @@
+﻿Сборка начата 04.07.2017 2:04:06.
+     1>Проект "C:\Users\alexander\Desktop\HW_cryptography\HW_cryptography\HW_cryptography\10_entropy\10_entropy.vcxproj" в узле 2 (целевые объекты Build).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _CRT_NO_WARNINGS /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt 10_entropy.cpp
+         10_entropy.cpp
+     1>c:\users\alexander\desktop\hw_cryptography\hw_cryptography\hw_cryptography\third-party\src\mpir\myfile.h(91): warning C4244: аргумент: преобразование "CryptoPP::lword" в "unsigned int", возможна потеря данных
+     1>c:\users\alexander\desktop\hw_cryptography\hw_cryptography\hw_cryptography\third-party\src\mpir\myfile.h(105): warning C4244: аргумент: преобразование "CryptoPP::lword" в "unsigned int", возможна потеря данных
+     1>c:\users\alexander\desktop\hw_cryptography\hw_cryptography\hw_cryptography\third-party\src\mpir\myfile.h(113): warning C4018: <: несоответствие типов со знаком и без знака
+     1>c:\users\alexander\desktop\hw_cryptography\hw_cryptography\hw_cryptography\10_entropy\10_entropy.cpp(69): warning C4018: <: несоответствие типов со знаком и без знака
+     1>c:\users\alexander\desktop\hw_cryptography\hw_cryptography\hw_cryptography\10_entropy\10_entropy.cpp(84): error C3861: compress: идентификатор не найден
+     1>Сборка проекта "C:\Users\alexander\Desktop\HW_cryptography\HW_cryptography\HW_cryptography\10_entropy\10_entropy.vcxproj" завершена (целевые объекты Build) с ошибкой.
+
+Ошибка сборки.
+
+Затраченное время: 00:00:00.78
